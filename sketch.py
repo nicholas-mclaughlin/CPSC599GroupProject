@@ -2,7 +2,14 @@ from tkinter import *
 from PIL import Image, ImageDraw
 import tensorflow as tf
 import numpy as np
-import io
+import os
+import sys
+
+# Determine model directory
+model_dir = os.path.join(sys.path[0], "model")
+print("Model Directory: {}".format(model_dir))
+model_path = os.path.join(model_dir, "model.h5")
+print("Model Path: {}".format(model_path))
 
 classes = ['The Eiffel Tower', 'The Great Wall of China', 'The Mona Lisa', 'aircraft carrier', 'airplane', 'alarm clock', 'ambulance', 'angel', 'animal migration', 'ant']
 
@@ -14,7 +21,15 @@ canvas_height = 500
 image = Image.new("RGB", (canvas_width, canvas_height), (255, 255, 255))
 draw = ImageDraw.Draw(image)
 
+# Load model
 loaded_model = tf.keras.models.load_model("./GUI/partial_transfer_learn.h5")
+# Do prediction on empty image once so that model is loaded and doesn't lag on first prediction
+image_resized = image.resize(size=(28,28))
+arr = np.array(image_resized)
+arr2 = np.reshape(arr, (1,28,28,3))
+arr2 = arr2 / 255
+pred = loaded_model.predict(arr2)
+
 
 def paint( event ):
     # Resize image in memory and save image to file (save to file only for debugging purposes)
