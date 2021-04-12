@@ -22,7 +22,7 @@ image = Image.new("RGB", (canvas_width, canvas_height), (255, 255, 255))
 draw = ImageDraw.Draw(image)
 
 # Load model
-loaded_model = tf.keras.models.load_model("./GUI/partial_transfer_learn.h5")
+loaded_model = tf.keras.models.load_model(model_path)
 # Do prediction on empty image once so that model is loaded and doesn't lag on first prediction
 image_resized = image.resize(size=(28,28))
 arr = np.array(image_resized)
