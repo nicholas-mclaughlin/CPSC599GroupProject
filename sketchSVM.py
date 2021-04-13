@@ -54,8 +54,8 @@ def paint( event ):
 
     # Predict with loaded model and numpy array
     pred = loaded_model.predict_proba(arr2)
-    print(classes[np.argmax(pred)])
-    print(pred)
+    # print(classes[np.argmax(pred)])
+    # print(pred)
 
     # Display prediction result
     result = classes[np.argmax(pred)] + " (" + str(pred[0][np.argmax(pred)] * 100) + "%)"
