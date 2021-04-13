@@ -5,11 +5,6 @@ import os
 import sys
 import pickle
 
-# Determine model directory
-model_dir = os.path.join(sys.path[0], "model")
-print("Model Directory: {}".format(model_dir))
-model_path = os.path.join(model_dir, "svm_model3.pkl")
-print("Model Path: {}".format(model_path))
 
 with open("model/svm_model3.pkl", 'rb') as file:
     loaded_model = pickle.load(file)
@@ -32,6 +27,9 @@ image_resized = image.resize(size=(28,28))
 arr = np.array(image_resized)
 arr2 = np.reshape(arr, (1,784))
 arr2 = arr2 / 255
+arr2 = np.ones((1,784)) - arr2
+#print(arr2)
+
 pred = loaded_model.predict(arr2)
 
 
@@ -45,7 +43,8 @@ def paint( event ):
     arr = np.array(image_resized)
     arr2 = np.reshape(arr, (1, 784))
     arr2 = arr2 / 255
-
+    arr2 = np.ones((1,784)) - arr2
+    #print(arr2)
     # Setup dot and dot location
     dot_size = 15
     x1, y1 = ( event.x - dot_size ), ( event.y - dot_size )
@@ -57,11 +56,11 @@ def paint( event ):
 
     # Predict with loaded model and numpy array
     pred = loaded_model.predict(arr2)
-    print(classes[np.argmax(pred)])
     print(pred)
+    print(classes[np.argmax(pred)])
 
     # Display prediction result
-    result = classes[np.argmax(pred)] + " (" + str(pred[np.argmax(pred)] * 100) + "%)"
+    result = classes[np.argmax(pred)]
     message.configure(text=result)
 
 
