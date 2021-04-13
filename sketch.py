@@ -5,11 +5,6 @@ import numpy as np
 import os
 import sys
 
-# Determine model directory
-model_dir = os.path.join(sys.path[0], "model")
-print("Model Directory: {}".format(model_dir))
-model_path = os.path.join(model_dir, "model.h5")
-print("Model Path: {}".format(model_path))
 
 classes = ['The Eiffel Tower', 'The Great Wall of China', 'The Mona Lisa', 'aircraft carrier', 'airplane', 'alarm clock', 'ambulance', 'angel', 'animal migration', 'ant']
 
@@ -18,15 +13,17 @@ canvas_height = 500
 
 # https://www.semicolonworld.com/question/55284/how-can-i-convert-canvas-content-to-an-image
 # These are used to draw the image to memory at the same time it is also drawn on the canvas
-image = Image.new("RGB", (canvas_width, canvas_height), (255, 255, 255))
+image = Image.new("1", (canvas_width, canvas_height), (255))
 draw = ImageDraw.Draw(image)
 
+file_path =  "/Users/lanjin/Desktop/CPSC599GroupProject/model/cnn-2.h5"
+
 # Load model
-loaded_model = tf.keras.models.load_model(model_path)
+loaded_model = tf.keras.models.load_model(file_path)
 # Do prediction on empty image once so that model is loaded and doesn't lag on first prediction
 image_resized = image.resize(size=(28,28))
 arr = np.array(image_resized)
-arr2 = np.reshape(arr, (1,28,28,3))
+arr2 = np.reshape(arr, (1,28,28,1))
 arr2 = arr2 / 255
 pred = loaded_model.predict(arr2)
 
@@ -39,7 +36,7 @@ def paint( event ):
 
     # Create numpy array from image in memory
     arr = np.array(image_resized)
-    arr2 = np.reshape(arr, (1,28,28,3))
+    arr2 = np.reshape(arr, (1,28,28,1))
     arr2 = arr2 / 255
 
     # Setup dot and dot location
