@@ -57,10 +57,10 @@ def paint( event ):
     # Predict with loaded model and numpy array
     pred = loaded_model.predict(arr2)
     print(pred)
-    print(classes[np.argmax(pred)])
+    print(classes[pred[0]])
 
     # Display prediction result
-    result = classes[np.argmax(pred)]
+    result = classes[pred[0]]
     message.configure(text=result)
 
 
