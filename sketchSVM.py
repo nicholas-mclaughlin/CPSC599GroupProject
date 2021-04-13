@@ -8,10 +8,10 @@ import pickle
 # Determine model directory
 model_dir = os.path.join(sys.path[0], "model")
 print("Model Directory: {}".format(model_dir))
-model_path = os.path.join(model_dir, "svm_model.pkl")
+model_path = os.path.join(model_dir, "svm_model3.pkl")
 print("Model Path: {}".format(model_path))
 
-with open("model/svm_model.pkl", 'rb') as file:
+with open("model/svm_model3.pkl", 'rb') as file:
     loaded_model = pickle.load(file)
 
 
