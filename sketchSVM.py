@@ -6,7 +6,7 @@ import sys
 import pickle
 
 
-with open("model/svm_model3.pkl", 'rb') as file:
+with open("model/svm_model4.pkl", 'rb') as file:
     loaded_model = pickle.load(file)
 
 
@@ -21,14 +21,12 @@ image = Image.new("L", (canvas_width, canvas_height), (255))
 draw = ImageDraw.Draw(image)
 
 
-
 # Do prediction on empty image once so that model is loaded and doesn't lag on first prediction
 image_resized = image.resize(size=(28,28))
 arr = np.array(image_resized)
 arr2 = np.reshape(arr, (1,784))
 arr2 = arr2 / 255
 arr2 = np.ones((1,784)) - arr2
-#print(arr2)
 
 pred = loaded_model.predict(arr2)
 
@@ -44,7 +42,7 @@ def paint( event ):
     arr2 = np.reshape(arr, (1, 784))
     arr2 = arr2 / 255
     arr2 = np.ones((1,784)) - arr2
-    #print(arr2)
+
     # Setup dot and dot location
     dot_size = 15
     x1, y1 = ( event.x - dot_size ), ( event.y - dot_size )
@@ -55,12 +53,12 @@ def paint( event ):
     draw.ellipse( [x1, y1, x2, y2], fill = '#000000' )
 
     # Predict with loaded model and numpy array
-    pred = loaded_model.predict(arr2)
+    pred = loaded_model.predict_proba(arr2)
+    print(classes[np.argmax(pred)])
     print(pred)
-    print(classes[pred[0]])
 
     # Display prediction result
-    result = classes[pred[0]]
+    result = classes[np.argmax(pred)] + " (" + str(pred[0][np.argmax(pred)] * 100) + "%)"
     message.configure(text=result)
 
 
