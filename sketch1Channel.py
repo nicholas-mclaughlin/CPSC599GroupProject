@@ -18,7 +18,7 @@ canvas_height = 500
 
 # https://www.semicolonworld.com/question/55284/how-can-i-convert-canvas-content-to-an-image
 # These are used to draw the image to memory at the same time it is also drawn on the canvas
-image = Image.new("1", (canvas_width, canvas_height), (255))
+image = Image.new("L", (canvas_width, canvas_height), (255))
 draw = ImageDraw.Draw(image)
 
 # Load model
