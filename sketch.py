@@ -8,7 +8,8 @@ import sys
 # Determine model directory
 model_dir = os.path.join(sys.path[0], "model")
 print("Model Directory: {}".format(model_dir))
-model_path = os.path.join(model_dir, "model.h5")
+# model_path = os.path.join(model_dir, "model.h5")
+model_path = "/Users/adnankarim/Desktop/CPSC599GroupProject/model/modelTransferPartial.h5"
 print("Model Path: {}".format(model_path))
 
 classes = ['The Eiffel Tower', 'The Great Wall of China', 'The Mona Lisa', 'aircraft carrier', 'airplane', 'alarm clock', 'ambulance', 'angel', 'animal migration', 'ant']
