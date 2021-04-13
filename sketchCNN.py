@@ -16,7 +16,8 @@ canvas_height = 500
 image = Image.new("L", (canvas_width, canvas_height), (255))
 draw = ImageDraw.Draw(image)
 #This should be the absolute path to the CNN model
-file_path =  "/Users/lanjin/Desktop/CPSC599GroupProject/model/cnn_model.h5"
+file_path =  "/Users/adnankarim/Desktop/CPSC599GroupProject/model/cnn-13.h5"
+
 
 # Load model
 loaded_model = tf.keras.models.load_model(file_path)
