@@ -1,4 +1,5 @@
 
 *.tflite
 *.h5
-*.npy
+/data
+
