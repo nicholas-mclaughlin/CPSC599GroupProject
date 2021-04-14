@@ -96,7 +96,7 @@ datagen = ImageDataGenerator(
 
 datagen.fit(x_train)
 
-def transferNoTrainable():
+def transferPartialTrainable():
     # Transfer learning Mobilenet model with no layers trainable
     from tensorflow.keras.optimizers import Adam
     from tensorflow.keras import layers
@@ -142,11 +142,7 @@ def transferNoTrainable():
     )
     return model
 
-model = transferNoTrainable()
+model = transferPartialTrainable()
 
 # Save model
 model.save(os.path.join(model_dir, model_name + ".h5"))
-# Save Tflite model
-converter = tf.lite.TFLiteConverter.from_keras_model(model)
-tflite_model = converter.convert()
-open(os.path.join(model_dir, model_name + '.tflite'), "wb").write(tflite_model)

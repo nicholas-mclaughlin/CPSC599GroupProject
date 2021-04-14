@@ -11,7 +11,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 # warnings.filterwarnings("ignore")
 
 img_rows, img_cols = 28, 28
-model_name = "modelMobilenet.h5"
+model_name = "modelFullTransfer.h5"
 
 # Determine data directory
 data_dir = os.path.join(sys.path[0], "data")
@@ -39,8 +39,8 @@ for numpy_file in FILES:
     target_i = np.ones(data_num_samples, dtype=int) * i
     target_i = target_i[:, np.newaxis]
 
-    data = np.append(data, data_i[8000:11000], axis=0)
-    target = np.append(target, target_i[8000:11000], axis=0)
+    data = np.append(data, data_i[3000:6000], axis=0)
+    target = np.append(target, target_i[3000:6000], axis=0)
 
     i += 1
     print("Current data array shape: {}".format(data.shape))
