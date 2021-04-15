@@ -20,6 +20,7 @@ class ButtonApp(App):
 		# bind() use to bind the button to function callback
 		transferLearningButton.bind(on_press = self.callbackForTL)
 		CNNButton.bind(on_press = self.callbackForCNN)
+		SVMButton.bind(on_press = self.callbackForSVM)
 		layout.add_widget(Label(text='Select your machine learning algorithm to predict what you are drawing:'))
 		layout.add_widget(transferLearningButton)
 		layout.add_widget(CNNButton)
@@ -35,7 +36,7 @@ class ButtonApp(App):
 		os.system('python3 sketch_one_channel.py')
 
 	def callbackForSVM(self, event):
-		os.system('python3 sketch.py')
+		os.system('python3 sketchSVM.py')
 		
 		
 
