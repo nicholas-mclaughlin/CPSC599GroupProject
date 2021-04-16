@@ -148,3 +148,16 @@ print("\nAccuracy on Test Set: {}".format(score[1]))
 
 # Save model
 model.save(os.path.join(model_dir, model_name + ".h5"))
+
+# Display confusion matrix
+from sklearn.metrics import confusion_matrix
+y_pred = np.argmax(model.predict(x_test, verbose=1), axis=1)
+confusion_matrix = confusion_matrix(y_test.astype(int), y_pred)
+print()
+print(confusion_matrix)
+plt.imshow(confusion_matrix, interpolation='nearest')
+plt.xticks(np.arange(0,num_classes), LABELS, rotation=90)
+plt.yticks(np.arange(0,num_classes), LABELS)
+plt.gcf().subplots_adjust(left=0.05)
+plt.gcf().subplots_adjust(bottom=0.40)
+plt.show()
