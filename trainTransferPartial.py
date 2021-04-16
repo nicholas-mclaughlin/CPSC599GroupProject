@@ -11,7 +11,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 # Setup variables
 img_rows, img_cols = 28, 28
-model_name = "modelTransferPartial"
+model_name = "modelTransferPartial_3000samplesPerClass_10epochs"
 num_samples_per_class = 3000
 num_classes = 10
 epochs = 10
