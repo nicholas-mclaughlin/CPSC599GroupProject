@@ -5,11 +5,11 @@ import os
 import sys
 import pickle
 
-
+# Load our model
 with open("model/svm_model.pkl", 'rb') as file:
     loaded_model = pickle.load(file)
 
-
+# The classes of images in our dataset
 classes = ['The Eiffel Tower', 'The Great Wall of China', 'The Mona Lisa', 'aircraft carrier', 'airplane', 'alarm clock', 'ambulance', 'angel', 'animal migration', 'ant']
 
 canvas_width = 500
@@ -28,6 +28,7 @@ arr2 = np.reshape(arr, (1,784))
 arr2 = arr2 / 255
 arr2 = np.ones((1,784)) - arr2
 
+# Prediction
 pred = loaded_model.predict(arr2)
 
 
@@ -54,14 +55,12 @@ def paint( event ):
 
     # Predict with loaded model and numpy array
     pred = loaded_model.predict_proba(arr2)
-    # print(classes[np.argmax(pred)])
-    # print(pred)
 
     # Display prediction result
     result = classes[np.argmax(pred)] + " (" + str(pred[0][np.argmax(pred)] * 100) + "%)"
     message.configure(text=result)
 
-
+# Setup Canvas
 master = Tk()
 master.title( "CPSC599 Quickdraw" )
 canvas = Canvas(master, 
@@ -73,9 +72,6 @@ canvas.bind( "<B1-Motion>", paint )
 
 message = Label( master, text = "Press and Drag the mouse to draw" )
 message.pack( side = BOTTOM )
-
-# # Load the TFLite model in TFLite Interpreter
-# interpreter = tf.lite.Interpreter(model_path="test123.tflite")
 
 
 mainloop()

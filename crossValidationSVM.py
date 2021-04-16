@@ -10,32 +10,33 @@ from sklearn.model_selection import train_test_split
 
 img_rows, img_cols = 28, 28
 num_samples_per_class = 3000
+# Use small number of data since its cross validation
+# and will take way too long if we use larger
 num_cross_validate_per_class = 300
 num_classes = 10
 
+# Directory of models and data
 cwd = os.getcwd()
 data_dir = os.path.join(cwd, "data_reduced")
 model_dir = os.path.join(cwd, "model")
 print("Data Directory: {}".format(data_dir))
 print(data_dir)
- 
+
+# Look at the data directory files, get a list of files in the directory,
+# reduce to the first 10 files, parse the labels from the file names 
 FILES = os.listdir(data_dir)
 FILES = [x for x in FILES if x.endswith('.npy')]
 FILES = sorted(FILES)
-FILES = FILES[0:10]
- 
+FILES = FILES[0:10] 
 LABELS = [file.replace(".npy", "") for file in FILES]
-# LABELS = [label.replace("full_numpy_bitmap_", "") for label in LABELS]
- 
 num_classes = len(LABELS)
-print(FILES)
-print(LABELS)
-print(num_classes)
+
 
 # Dataset with where each entry is flattened numpy image
 data = np.array([]).reshape(0, img_rows * img_cols)
 target = np.array([]).reshape(0, 1)
   
+# Loop through loading numpy files and set up dataset and target arrays
 i = 0
 for numpy_file in FILES:
     print("--> Loading the numpy file: {}".format(numpy_file))
@@ -46,15 +47,13 @@ for numpy_file in FILES:
     target_i = np.ones(data_num_samples, dtype=int) * i
     target_i = target_i[:, np.newaxis]
  
+      # Append current data to combined array
     data = np.append(data, data_i[:num_cross_validate_per_class], axis=0)
     target = np.append(target, target_i[:num_cross_validate_per_class], axis=0)
  
     i += 1
     print("Current data array shape: {}".format(data.shape))
     print("Current target array shape: {}".format(target.shape))
- 
-# np.random.shuffle(dataset)
-# dataset_len = len(dataset)
  
 print("_________________________")
 print("Final data array shape: {}".format(data.shape))
@@ -74,12 +73,13 @@ x_test = x_test.astype('float32')
 x_train /= 255
 x_test /= 255
 
+# Reshape images so it works for SVM
 y_train = np.reshape(y_train, (len(y_train)))
 y_train = y_train.astype(int)
 
 # SVM Cross Validation
-y_train = np.reshape(y_train, (len(y_train)))
-y_train = y_train.astype(int)
+# Using linear, poly, rbf, and sigmoid
+# We find rbf is the best
 linearK = svm.SVC(kernel='linear', random_state=888)
 scores1 = cross_val_score(linearK, x_train, y_train, cv=5)
 print("Linear SVC has %0.3f accuracy with a standard deviation of %0.3f" % 

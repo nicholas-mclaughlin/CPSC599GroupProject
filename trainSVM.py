@@ -1,4 +1,3 @@
-# Commented out IPython magic to ensure Python compatibility.
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,35 +11,32 @@ import pickle
 
 
 img_rows, img_cols = 28, 28
-# Had 3000 but takes way too long to train
+# Had 3000 but takes way too long to train (30+ minutes)
 num_samples_per_class = 1000
 num_classes = 10
 
+# Directory of models and data
 cwd = os.getcwd()
 data_dir = os.path.join(cwd, "data_reduced")
 model_dir = os.path.join(cwd, "model")
 print("Data Directory: {}".format(data_dir))
 print(data_dir)
  
+# Look at the data directory files, get a list of files in the directory,
+# reduce to the first 10 files, parse the labels from the file names
 FILES = os.listdir(data_dir)
 FILES = [x for x in FILES if x.endswith('.npy')]
 FILES = sorted(FILES)
 FILES = FILES[0:10]
- 
 LABELS = [file.replace(".npy", "") for file in FILES]
-# LABELS = [label.replace("full_numpy_bitmap_", "") for label in LABELS]
  
 num_classes = len(LABELS)
-print(FILES)
-print(LABELS)
-print(num_classes)
-
 
 # Dataset with where each entry is flattened numpy image
 data = np.array([]).reshape(0, img_rows * img_cols)
 target = np.array([]).reshape(0, 1)
 
-  
+# Loop through loading numpy files and set up dataset and target arrays
 i = 0
 for numpy_file in FILES:
     print("--> Loading the numpy file: {}".format(numpy_file))
@@ -51,6 +47,7 @@ for numpy_file in FILES:
     target_i = np.ones(data_num_samples, dtype=int) * i
     target_i = target_i[:, np.newaxis]
 
+    # Append current data to combined array
     data = np.append(data, data_i[:num_samples_per_class], axis=0)
     target = np.append(target, target_i[:num_samples_per_class], axis=0)
 
@@ -75,6 +72,7 @@ x_test = x_test.astype('float32')
 x_train /= 255
 x_test /= 255
 
+# Reshape images so it works for SVM
 y_train = np.reshape(y_train, (len(y_train)))
 y_train = y_train.astype(int)
 
@@ -85,10 +83,12 @@ rbfK = svm.SVC(kernel='rbf', probability=True, random_state=888)
 rbfK.fit(x_train, y_train)
 print("Accuracy on test set with rbf kernel SVM model: {:.3f}".format(rbfK.score(x_test, y_test)))
 
+# Send the model to specific file using pickel
 pkl_filename = "svm_model.pkl"
 with open('model/svm_model.pkl', 'wb') as file:
     pickle.dump(rbfK, file)
 
+# Open the file with pickel to see if the opened model works
 with open('model/svm_model.pkl', 'rb') as file:
     pickle_model = pickle.load(file)
 
@@ -105,4 +105,5 @@ plt.xticks(np.arange(0,num_classes), LABELS, rotation=90)
 plt.yticks(np.arange(0,num_classes), LABELS)
 plt.gcf().subplots_adjust(left=0.05)
 plt.gcf().subplots_adjust(bottom=0.40)
+plt.title('Support Vector Machine')
 plt.show()
