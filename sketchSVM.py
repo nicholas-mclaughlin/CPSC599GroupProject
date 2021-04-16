@@ -6,7 +6,7 @@ import sys
 import pickle
 
 
-with open("model/svm_model4.pkl", 'rb') as file:
+with open("model/svm_model.pkl", 'rb') as file:
     loaded_model = pickle.load(file)
 
 
