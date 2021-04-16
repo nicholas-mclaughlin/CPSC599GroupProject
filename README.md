@@ -19,12 +19,9 @@ classes = ['The Eiffel Tower', 'The Great Wall of China', 'The Mona Lisa', 'airc
 
 To run the application, go to the project directory "CPSC599GroupProject"
 
-From there, run one of the following commands:
-To run the application using the SVM model: python3 sketchSVM.py
-To run the application using the CNN model: python3 sketchCNN.py
-To run the application using the Transfer Learning Partial model: python3 sketchTransferPartial.py
-To run the application using the Transfer Learning Full model: python3 sketchTransferFull.py
-To run the application using the Transfer Learning Partial model: python3 sketchMobileNet.py
+From there, run the following command: python3 GUIComponent.py
+
+You can then select a button to run the model of your choice to test out your drawings. It does take some time so make sure to click the button once and to wait until the canvas appears. If you want to change models, close the current running canvas and then select another model.
 
 ** NOTE **
 Not all drawings are recongized that well for each class. When we test our application, these classes are best recognized:
