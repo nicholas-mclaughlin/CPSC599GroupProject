@@ -7,7 +7,7 @@ import sklearn
 from sklearn import svm
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import plot_confusion_matrix
+from sklearn.metrics import confusion_matrix
 import pickle
 
 
@@ -80,14 +80,14 @@ y_train = y_train.astype(int)
 
 
 
-# # Train a SVM model with rbf kernel using X_train and y_train
-# rbfK = svm.SVC(kernel='rbf', probability=True, random_state=888)
-# rbfK.fit(x_train, y_train)
-# print("Accuracy on test set with rbf kernel SVM model: {:.3f}".format(rbfK.score(x_test, y_test)))
+# Train a SVM model with rbf kernel using X_train and y_train
+rbfK = svm.SVC(kernel='rbf', probability=True, random_state=888)
+rbfK.fit(x_train, y_train)
+print("Accuracy on test set with rbf kernel SVM model: {:.3f}".format(rbfK.score(x_test, y_test)))
 
-# pkl_filename = "svm_model.pkl"
-# with open('model/svm_model.pkl', 'wb') as file:
-#     pickle.dump(rbfK, file)
+pkl_filename = "svm_model.pkl"
+with open('model/svm_model.pkl', 'wb') as file:
+    pickle.dump(rbfK, file)
 
 with open('model/svm_model.pkl', 'rb') as file:
     pickle_model = pickle.load(file)
@@ -96,17 +96,10 @@ print("Accuracy on test set with rbf kernel SVM model: {:.3f}".format(pickle_mod
 
 
 # Display confusion matrix
-# y_pred = np.argmax(rbfK.predict(x_test), axis=1)
-# confusion_matrix = confusion_matrix(y_test.astype(int), y_pred)
-# print()
-# print(confusion_matrix)
-# plt.imshow(confusion_matrix, interpolation='nearest')
-# plt.xticks(np.arange(0,num_classes), LABELS, rotation=90)
-# plt.yticks(np.arange(0,num_classes), LABELS)
-# plt.gcf().subplots_adjust(left=0.05)
-# plt.gcf().subplots_adjust(bottom=0.40)
-y_pred = np.argmax(pickle_model.predict(x_test))
-confusion_matrix = plot_confusion_matrix(y_test.astype(int), y_pred)
+y_pred = pickle_model.predict(x_test)
+confusion_matrix = confusion_matrix(y_test.astype(int), y_pred)
+print()
+print(confusion_matrix)
 plt.imshow(confusion_matrix, interpolation='nearest')
 plt.xticks(np.arange(0,num_classes), LABELS, rotation=90)
 plt.yticks(np.arange(0,num_classes), LABELS)
