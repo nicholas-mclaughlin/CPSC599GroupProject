@@ -6,11 +6,12 @@ pip3 install --user --upgrade tensorflow
 
 To train each model:
 
-SVM: python3 
-CNN: Visit this google colab link: https://colab.research.google.com/drive/1iv7WFsqMX9SASDNnGordLPn26rPWMxbh?usp=sharing 
-Transfer Learning Partial: python3 trainTransferPartial.py 
-Transfer Learning Full: python3 trainTransferFull.py
-MobileNet: python3 trainMobileNet.py
+Choosing best SVM Kernel: python3 crossValidationSVM.py
+Train SVM: python3 trainSVM.py
+Train CNN: Visit this google colab link: https://colab.research.google.com/drive/1iv7WFsqMX9SASDNnGordLPn26rPWMxbh?usp=sharing 
+Train Transfer Learning Partial: python3 trainTransferPartial.py 
+Train Transfer Learning Full: python3 trainTransferFull.py
+Train MobileNet: python3 trainMobileNet.py
 
 
 You do not need to train the models first; we already have the trained models saved. You can skip to trying the application if you would like to but you can train if you wish.
